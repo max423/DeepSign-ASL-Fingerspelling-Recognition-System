@@ -3,8 +3,9 @@ import mediapipe as mp
 import numpy as np
 import tensorflow as tf
 
-PATH = '/Users/niccolo/Downloads/Unbalanced.h5'
-MIN_CONFIDENCE = 0.8
+PATH = '/Users/niccolo/Downloads/RandomUnderSampler.h5'
+MIN_CONFIDENCE = 0.7
+
 def main():
     model = tf.keras.models.load_model(PATH)
 
@@ -52,7 +53,7 @@ def main():
                     y_.append(y)
 
                     # Append normalized x, y, and z coordinates for each landmark
-                    data_aux.extend([x - min(x_), y - min(y_), z])
+                    data_aux.extend([x, y, z])
 
                 x1 = int(min(x_) * frame.shape[1]) - 10
                 y1 = int(min(y_) * frame.shape[0]) - 10
@@ -78,7 +79,6 @@ def main():
 
     cap.release()
     cv2.destroyAllWindows()
-
 
 if __name__ == '__main__':
     main()
